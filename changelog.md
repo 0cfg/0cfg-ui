@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Improved
+- Navigation
+
+### Fixed
+- A bug that prevented the use of a base path
+
 ## [0.1.9]
 
 ### Improved

@@ -144,7 +144,7 @@ export class Router {
      * Create a new router.
      */
     public static create(basePath: string = '/') {
-        return new Router();
+        return new Router(basePath);
     }
 
     /**
@@ -159,13 +159,18 @@ export class Router {
 
     /**
      * Set the current url in the browser.
-     * @param silent will not execute any listeners if set to true.
      */
-    public setUrl(url: string, silent?: boolean): this {
-        history.pushState({url: url}, '', url);
-        if (!silent) {
-            this.enqueueCurrentRoute();
-        }
+    public setUrl(url: string): this {
+        history.pushState({url}, '', url);
+        return this;
+    }
+
+    /**
+     * Set the current url and execute listeners.
+     */
+    public navigateTo(url: string): this {
+        this.setUrl(url);
+        this.enqueueCurrentRoute();
         return this;
     }
 
@@ -197,10 +202,10 @@ export class Router {
 /**
  * Get the URL parameters
  * source: https://css-tricks.com/snippets/javascript/get-url-variables/
- * @param  {String} url The URL
- * @return {Object}     The URL parameters
+ *
+ * @return {Object} The URL parameters
  */
-export const getUrlParams = (url: string) => {
+export const getUrlParams = (url: string): Record<string, string> => {
     const params: Record<string, string> = {};
     const parser = document.createElement('a');
     parser.href = url;
